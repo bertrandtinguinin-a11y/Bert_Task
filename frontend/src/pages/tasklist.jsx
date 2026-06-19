@@ -14,6 +14,7 @@ const SORT_COLUMNS = [
   { key: 'responsible_person', label: 'Responsable' },
   { key: 'status', label: 'Statut' },
   { key: 'priority', label: 'Priorité' },
+  { key: 'start_date', label: 'Début' },
   { key: 'due_date', label: 'Échéance' },
 ]
 
@@ -208,6 +209,11 @@ export default function TaskList() {
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap">
                       <PriorityBadge priority={task.priority} />
+                    </td>
+                    <td className="px-3 py-3">
+                      <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                        {formatDate(task.start_date)}
+                      </span>
                     </td>
                     <td className="px-3 py-3">
                       <span className={`text-xs whitespace-nowrap ${

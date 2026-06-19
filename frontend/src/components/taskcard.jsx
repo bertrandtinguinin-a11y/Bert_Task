@@ -4,6 +4,9 @@ import PriorityBadge from './PriorityBadge'
 
 export default function TaskCard({ task }) {
   const navigate = useNavigate()
+  const startDate = task.start_date
+    ? new Date(task.start_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
+    : null
   const dueDate = task.due_date
     ? new Date(task.due_date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
     : null
@@ -38,6 +41,11 @@ export default function TaskCard({ task }) {
           </div>
         </div>
         <div className="text-right flex-shrink-0">
+          {startDate && (
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              🚀 {startDate}
+            </p>
+          )}
           {dueDate && (
             <p className={`text-xs font-medium ${isOverdue ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'}`}>
               {isOverdue ? '⚠️ ' : '📅 '}{dueDate}

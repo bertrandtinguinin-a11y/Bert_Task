@@ -1,8 +1,8 @@
 {
-  "buildCommand": "cd frontend && npx vite build",
+  "framework": null,
   "outputDirectory": "frontend/dist",
-  "installCommand": "cd frontend && npm install",
-  "framework": "vite",
+  "buildCommand": null,
+  "installCommand": null,
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]

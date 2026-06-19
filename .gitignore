@@ -3,3 +3,6 @@ node_modules
 .env  
 .env.local  
 dist 
+-1  
+check-*.mjs  
+test-commit.txt  

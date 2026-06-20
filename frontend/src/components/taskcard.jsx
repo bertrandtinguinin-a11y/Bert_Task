@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import StatusBadge from './StatusBadge'
-import PriorityBadge from './PriorityBadge'
+import StatusBadge from './statusbadge'
+import PriorityBadge from './prioritybadge'
 
 export default function TaskCard({ task }) {
   const navigate = useNavigate()

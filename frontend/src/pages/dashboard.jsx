@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { fetchDashboard, fetchTasks } from '../api/client'
-import KpiCard from '../components/KpiCard'
-import TaskCard from '../components/TaskCard'
-import FilterBar from '../components/FilterBar'
+import KpiCard from '../components/kpicard'
+import TaskCard from '../components/taskcard'
+import FilterBar from '../components/filterbar'
 import toast from 'react-hot-toast'
 
 export default function Dashboard() {

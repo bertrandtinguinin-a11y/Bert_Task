@@ -1,12 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import Layout from './components/Layout'
-import Dashboard from './pages/Dashboard'
-import TaskList from './pages/TaskList'
-import TaskForm from './pages/TaskForm'
-import Synthesis from './pages/Synthesis'
-import AIInsights from './pages/AIInsights'
-import Settings from './pages/Settings'
+import Layout from './components/layout'
+import Dashboard from './pages/dashboard'
+import TaskList from './pages/tasklist'
+import TaskForm from './pages/taskform'
+import Synthesis from './pages/synthesis'
+import AIInsights from './pages/aiinsights'
+import Settings from './pages/settings'
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(() => {

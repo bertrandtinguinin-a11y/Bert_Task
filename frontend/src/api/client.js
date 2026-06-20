@@ -30,7 +30,8 @@ export async function signUp(email, password, username) {
     email,
     password,
     options: {
-      data: { username, role: 'viewer' }
+      data: { username, role: 'viewer' },
+      emailRedirectTo: window.location.origin + '/',
     }
   })
   if (error) throw error

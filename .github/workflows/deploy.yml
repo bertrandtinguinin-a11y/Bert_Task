@@ -28,13 +28,13 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build
         working-directory: ./frontend
         env:
           VITE_BASE_URL: /Bert_Task/
-        run: npm run build
+        run: npx --yes vite build
 
       - name: Copy 404.html for SPA routing
         working-directory: ./frontend/dist

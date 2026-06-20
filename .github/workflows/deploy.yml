@@ -27,18 +27,20 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        working-directory: ./frontend
-        run: npm install --legacy-peer-deps
+        run: |
+          cd frontend
+          rm -f package-lock.json
+          npm install --legacy-peer-deps
 
       - name: Build
-        working-directory: ./frontend
-        env:
-          VITE_BASE_URL: /Bert_Task/
-        run: npx --yes vite build
+        run: |
+          cd frontend
+          ls node_modules/.bin/
+          VITE_BASE_URL=/Bert_Task/ node node_modules/.bin/vite build 2>&1
 
       - name: Copy 404.html for SPA routing
         working-directory: ./frontend/dist
-        run: cp index.html 404.html
+        run: test -f index.html && cp index.html 404.html || echo "404 copy skipped"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

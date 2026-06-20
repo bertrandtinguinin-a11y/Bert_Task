@@ -92,7 +92,11 @@ export async function fetchTask(id) {
 }
 
 export async function createTask(taskData) {
-  const { data, error } = await supabase.from('tasks').insert([taskData]).select()
+  // Defense-in-depth : on fixe owner_id explicitement (le RLS exige
+  // owner_id = auth.uid()). Ne dépend pas seulement du DEFAULT SQL.
+  const { data: { user } } = await supabase.auth.getUser()
+  const payload = user ? { ...taskData, owner_id: user.id } : taskData
+  const { data, error } = await supabase.from('tasks').insert([payload]).select()
   if (error) throw new Error(error.message)
   return data[0]
 }

@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { fetchTasks, deleteTask } from '../api/client'
-import StatusBadge from '../components/StatusBadge'
-import PriorityBadge from '../components/PriorityBadge'
-import FilterBar from '../components/FilterBar'
-import TaskCard from '../components/TaskCard'
+import StatusBadge from '../components/statusbadge'
+import PriorityBadge from '../components/prioritybadge'
+import FilterBar from '../components/filterbar'
+import TaskCard from '../components/taskcard'
 import toast from 'react-hot-toast'
 
 const SORT_COLUMNS = [

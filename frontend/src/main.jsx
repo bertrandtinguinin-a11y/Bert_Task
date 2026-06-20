@@ -5,9 +5,13 @@ import { Toaster } from 'react-hot-toast'
 import App from './app'
 import './index.css'
 
+// GitHub Pages utilise /Bert_Task/ comme base ; Vercel utilise /
+// On supprime le trailing slash pour React Router
+const basePath = import.meta.env.BASE_URL.replace(/\/+$/, '') || '/'
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basePath}>
       <App />
       <Toaster
         position="top-right"

@@ -1,5 +1,7 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { signOut } from '../api/client'
+import toast from 'react-hot-toast'
 
 const NAV_ITEMS = [
   { path: '/', label: 'Tableau de bord', icon: '📊' },
@@ -9,9 +11,40 @@ const NAV_ITEMS = [
   { path: '/settings', label: 'Paramètres', icon: '⚙️' },
 ]
 
-export default function Layout({ children, darkMode, toggleDarkMode }) {
+export default function Layout({ children, darkMode, toggleDarkMode, user }) {
   const location = useLocation()
+  const navigate = useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const handleLogout = async () => {
+    try {
+      await signOut()
+      toast.success('Déconnecté')
+      navigate('/')
+    } catch (err) {
+      toast.error(err.message || 'Erreur déconnexion')
+    }
+  }
+
+  // Bloc compte réutilisé (sidebar mobile + desktop)
+  const AccountBox = () => (
+    user ? (
+      <div className="space-y-2">
+        <p className="text-xs text-gray-500 dark:text-gray-400 truncate" title={user.email}>
+          👤 {user.email}
+        </p>
+        <button onClick={handleLogout}
+          className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
+          Se déconnecter
+        </button>
+      </div>
+    ) : (
+      <Link to="/login" onClick={() => setSidebarOpen(false)}
+        className="block w-full text-center px-3 py-2 rounded-lg text-sm font-semibold text-white bg-green-600 hover:bg-green-700">
+        Se connecter
+      </Link>
+    )
+  )
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -59,6 +92,9 @@ export default function Layout({ children, darkMode, toggleDarkMode }) {
                 </Link>
               ))}
             </nav>
+            <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <AccountBox />
+            </div>
           </div>
         </div>
       )}
@@ -84,7 +120,8 @@ export default function Layout({ children, darkMode, toggleDarkMode }) {
               </Link>
             ))}
           </nav>
-          <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
+            <AccountBox />
             <button onClick={toggleDarkMode} className="p-1.5 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm" title={darkMode ? 'Mode clair' : 'Mode sombre'}>
               {darkMode ? '☀️ Clair' : '🌙 Sombre'}
             </button>

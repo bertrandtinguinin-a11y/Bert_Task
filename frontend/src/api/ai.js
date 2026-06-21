@@ -95,8 +95,8 @@ export function detectBlockages(tasks) {
   const n = blockages.length
   const crit = blockages.filter(b => b.severity === "Critique").length
   const summary = n === 0
-    ? "✅ Aucun blocage détecté. Toutes les tâches en cours progressent normalement."
-    : `🔍 ${n} blocage(s) détecté(s). ${crit > 0 ? `⚠️ ${crit} critique(s). ` : ""}Consultez les suggestions détaillées.`
+    ? "Aucun blocage détecté. Toutes les tâches en cours progressent normalement."
+    : `${n} blocage(s) détecté(s). ${crit > 0 ? `${crit} critique(s). ` : ""}Consultez les suggestions détaillées.`
 
   return { blockages, total_blockages: n, summary }
 }
@@ -139,7 +139,7 @@ export function prioritizeTasks(tasks) {
   const changes = suggestions.filter(s => s.suggested_priority !== s.current_priority).length
   return {
     suggestions,
-    summary: `📊 Analyse de ${tasks.length} tâche(s). ${changes} changement(s) de priorité suggéré(s).`,
+    summary: `Analyse de ${tasks.length} tâche(s). ${changes} changement(s) de priorité suggéré(s).`,
   }
 }
 
@@ -172,9 +172,9 @@ export function generatePerformanceSummary(tasks) {
     .map(([k, v]) => `${k} (${Math.round(v.completed / v.total * 100)}%)`)
   if (weakThemes.length > 0) concerns.push(`Thèmes à faible progression : ${weakThemes.join(", ")}`)
 
-  const summaryText = `📋 Point DG — ${total} tâches suivies, ${completed} réalisées (${rate}%). ` +
-    (highlights.length > 0 ? "✅ " + highlights.join(" ") + " " : "") +
-    (concerns.length > 0 ? "⚠️ " + concerns.join(" ") : "")
+  const summaryText = `Point DG — ${total} tâches suivies, ${completed} réalisées (${rate}%). ` +
+    (highlights.length > 0 ? highlights.join(" ") + " " : "") +
+    (concerns.length > 0 ? concerns.join(" ") : "")
 
   return {
     period: new Date().toLocaleDateString("fr-FR"),
@@ -234,6 +234,6 @@ export function generateRecommendations(tasks) {
 
   return {
     recommendations,
-    summary: `📌 ${recommendations.length} recommandations : ${recommendations.filter(r => r.priority === "Haute").length} haute(s), ${recommendations.filter(r => r.priority === "Moyenne").length} moyenne(s), ${recommendations.filter(r => r.priority === "Basse").length} basse(s).`,
+    summary: `${recommendations.length} recommandations : ${recommendations.filter(r => r.priority === "Haute").length} haute(s), ${recommendations.filter(r => r.priority === "Moyenne").length} moyenne(s), ${recommendations.filter(r => r.priority === "Basse").length} basse(s).`,
   }
 }

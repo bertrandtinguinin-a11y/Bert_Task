@@ -1,3 +1,5 @@
+import Icon from './icon'
+
 const STATUS_STYLES = {
   'Réalisé': 'badge status-realise',
   'En cours': 'badge status-en-cours',
@@ -8,21 +10,22 @@ const STATUS_STYLES = {
 }
 
 const STATUS_ICONS = {
-  'Réalisé': '✅',
-  'En cours': '🔄',
-  'À faire': '📝',
-  'À traiter': '📥',
-  'Bloqué': '🚫',
-  'À planifier': '📅',
+  'Réalisé': 'done',
+  'En cours': 'progress',
+  'À faire': 'todo',
+  'À traiter': 'export',
+  'Bloqué': 'blocked',
+  'À planifier': 'calendar',
 }
 
 export default function StatusBadge({ status, className = '' }) {
   const style = STATUS_STYLES[status] || 'badge bg-gray-100 text-gray-800'
-  const icon = STATUS_ICONS[status] || ''
+  const icon = STATUS_ICONS[status]
 
   return (
-    <span className={`${style} ${className}`}>
-      {icon} {status}
+    <span className={`${style} inline-flex items-center gap-1.5 ${className}`}>
+      {icon && <Icon name={icon} className="text-[0.85em]" />}
+      {status}
     </span>
   )
 }

@@ -2,12 +2,12 @@
   "name": "TaskMN",
   "short_name": "TaskMN",
   "description": "Gestion de tâches — M&N Expertise, Natitingou, Bénin",
-  "start_url": "/Bert_Task/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#15803d",
   "icons": [{
-    "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>",
+    "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2315803d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='4' y='4' width='16' height='16' rx='3'/><path d='M8 12l3 3 5-6'/></svg>",
     "sizes": "any",
     "type": "image/svg+xml"
   }]

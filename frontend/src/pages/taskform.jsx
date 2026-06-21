@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { fetchTask, createTask, updateTask, fetchTaskHistory } from '../api/client'
+import Icon from '../components/icon'
 import toast from 'react-hot-toast'
 
 const STATUSES = ['À faire', 'En cours', 'Réalisé', 'À traiter', 'À planifier', 'Bloqué']
@@ -125,8 +126,8 @@ export default function TaskForm() {
     <div className="space-y-6 max-w-3xl">
       {/* Header */}
       <div className="flex items-center gap-3">
-        <button onClick={() => navigate(-1)} className="btn-secondary py-1.5 text-sm">
-          ← Retour
+        <button onClick={() => navigate(-1)} className="btn-secondary py-1.5 text-sm inline-flex items-center gap-1.5">
+          <Icon name="back" /> Retour
         </button>
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           {isEdit ? 'Modifier la tâche' : 'Nouvelle tâche'}
@@ -277,8 +278,12 @@ export default function TaskForm() {
 
           {/* Actions */}
           <div className="flex items-center gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-            <button type="submit" disabled={loading} className="btn-primary">
-              {loading ? '⏳ Enregistrement...' : isEdit ? '💾 Mettre à jour' : '✅ Créer la tâche'}
+            <button type="submit" disabled={loading} className="btn-primary inline-flex items-center gap-2">
+              {loading
+                ? <><Icon name="spinner" spin />Enregistrement...</>
+                : isEdit
+                  ? <><Icon name="save" />Mettre à jour</>
+                  : <><Icon name="done" />Créer la tâche</>}
             </button>
             <button type="button" onClick={() => navigate('/tasks')} className="btn-secondary">
               Annuler
@@ -295,7 +300,7 @@ export default function TaskForm() {
             className="flex items-center justify-between w-full text-left"
           >
             <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-              📜 Historique des modifications ({history.length})
+              <Icon name="history" className="mr-2" />Historique des modifications ({history.length})
             </h3>
             <span className="text-gray-400">{showHistory ? '▲' : '▼'}</span>
           </button>
@@ -309,7 +314,7 @@ export default function TaskForm() {
                   </div>
                   <div className="flex items-center gap-2 mt-0.5">
                     {h.old_value && <span className="text-red-500 line-through">{h.old_value}</span>}
-                    {h.old_value && h.new_value && <span className="text-gray-400">→</span>}
+                    {h.old_value && h.new_value && <Icon name="arrow-right" className="text-gray-400 text-[0.8em]" />}
                     <span className="text-green-600 dark:text-green-400">{h.new_value || '(création)'}</span>
                   </div>
                   {h.changed_by && <span className="text-gray-500">par {h.changed_by}</span>}

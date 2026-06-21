@@ -4,6 +4,7 @@ import { fetchDashboard, fetchTasks } from '../api/client'
 import KpiCard from '../components/kpicard'
 import TaskCard from '../components/taskcard'
 import FilterBar from '../components/filterbar'
+import Icon from '../components/icon'
 import toast from 'react-hot-toast'
 
 export default function Dashboard() {
@@ -34,7 +35,7 @@ export default function Dashboard() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin text-4xl mb-4">⏳</div>
+          <Icon name="spinner" spin className="text-4xl mb-4 text-gray-400" />
           <p className="text-gray-500 dark:text-gray-400">Chargement du tableau de bord...</p>
         </div>
       </div>
@@ -51,8 +52,8 @@ export default function Dashboard() {
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Tableau de bord</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400">TaskMN — État des lieux</p>
         </div>
-        <button onClick={() => navigate('/tasks/new')} className="btn-primary text-sm">
-          ➕ Nouvelle tâche
+        <button onClick={() => navigate('/tasks/new')} className="btn-primary text-sm inline-flex items-center gap-2">
+          <Icon name="plus" /> Nouvelle tâche
         </button>
       </div>
 
@@ -61,28 +62,28 @@ export default function Dashboard() {
         <KpiCard
           title="Total tâches"
           value={dashboard.total_tasks}
-          icon="📋"
+          icon="tasks"
           color="primary"
           subtitle="Toutes les tâches"
         />
         <KpiCard
           title="Réalisées"
           value={dashboard.completed}
-          icon="✅"
+          icon="done"
           color="green"
           subtitle={`${dashboard.completion_rate}%`}
         />
         <KpiCard
           title="En cours"
           value={dashboard.in_progress}
-          icon="🔄"
+          icon="progress"
           color="blue"
           subtitle="En progression"
         />
         <KpiCard
           title="Bloquées"
           value={dashboard.blocked}
-          icon="🚫"
+          icon="blocked"
           color="red"
           subtitle="Nécessitent attention"
         />
@@ -128,14 +129,14 @@ export default function Dashboard() {
               onClick={() => navigate('/tasks')}
               className="text-xs text-primary-600 dark:text-primary-400 hover:underline"
             >
-              Voir tout →
+              Voir tout <Icon name="arrow-right" className="ml-1" />
             </button>
           )}
         </div>
 
         {tasks.length === 0 ? (
           <div className="card text-center py-12">
-            <div className="text-4xl mb-3">📭</div>
+            <Icon name="empty" className="text-4xl mb-3 text-gray-300 dark:text-gray-600" />
             <p className="text-gray-500 dark:text-gray-400">Aucune tâche trouvée avec ces filtres.</p>
           </div>
         ) : (

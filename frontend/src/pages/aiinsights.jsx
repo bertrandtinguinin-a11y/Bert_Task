@@ -3,6 +3,7 @@ import {
   fetchTasks, fetchAIPrioritize, fetchAIBlockages,
   fetchAISummary, fetchAIRecommendations,
 } from '../api/client'
+import Icon from '../components/icon'
 import toast from 'react-hot-toast'
 
 export default function AIInsights() {
@@ -37,17 +38,17 @@ export default function AIInsights() {
   }
 
   const tabs = [
-    { key: 'summary', label: '📊 Résumé', icon: '📊' },
-    { key: 'blockages', label: '🚫 Blocages', icon: '🚫', count: blockages?.total_blockages },
-    { key: 'prioritize', label: '🔄 Priorisation', icon: '🔄', count: prioritize?.suggestions?.length },
-    { key: 'recommendations', label: '💡 Recommandations', icon: '💡', count: recommendations?.recommendations?.length },
+    { key: 'summary', label: 'Résumé', icon: 'chart' },
+    { key: 'blockages', label: 'Blocages', icon: 'blocked', count: blockages?.total_blockages },
+    { key: 'prioritize', label: 'Priorisation', icon: 'progress', count: prioritize?.suggestions?.length },
+    { key: 'recommendations', label: 'Recommandations', icon: 'lightbulb', count: recommendations?.recommendations?.length },
   ]
 
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin text-4xl mb-4">🤖</div>
+          <Icon name="spinner" spin className="text-4xl mb-4 text-gray-400" />
           <p className="text-gray-500 dark:text-gray-400">Analyse IA en cours...</p>
           <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">Analyse sémantique des tâches et observations</p>
         </div>
@@ -58,7 +59,7 @@ export default function AIInsights() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">🤖 IA Insights</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 inline-flex items-center gap-2"><Icon name="ai" className="text-gray-400" />IA Insights</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">Analyse intelligente des tâches — Priorisation, Blocages, Recommandations</p>
       </div>
 
@@ -74,7 +75,7 @@ export default function AIInsights() {
                 : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
             }`}
           >
-            <span>{tab.icon}</span>
+            <Icon name={tab.icon} />
             <span>{tab.label}</span>
             {tab.count > 0 && (
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
@@ -94,7 +95,7 @@ export default function AIInsights() {
         <div className="space-y-4">
           <div className="card border-l-4 border-primary-500">
             <div className="flex items-start gap-3">
-              <span className="text-2xl">📋</span>
+              <span className="text-2xl text-primary-500"><Icon name="tasks" /></span>
               <div>
                 <h3 className="font-semibold text-gray-800 dark:text-gray-200">
                   Résumé de Performance — {summary.period}
@@ -110,12 +111,12 @@ export default function AIInsights() {
             {/* Highlights */}
             <div className="card border-l-4 border-green-500">
               <h4 className="text-sm font-semibold text-green-700 dark:text-green-300 mb-3">
-                ✅ Points forts ({summary.highlights.length})
+<Icon name="done" className="mr-1.5" />Points forts ({summary.highlights.length})
               </h4>
               <ul className="space-y-2">
                 {summary.highlights.map((h, i) => (
                   <li key={i} className="text-sm text-gray-700 dark:text-gray-300 flex items-start gap-2">
-                    <span className="text-green-500 mt-0.5">✓</span>
+                    <span className="text-green-500 mt-0.5"><Icon name="check" /></span>
                     {h}
                   </li>
                 ))}
@@ -125,12 +126,12 @@ export default function AIInsights() {
             {/* Concerns */}
             <div className="card border-l-4 border-red-500">
               <h4 className="text-sm font-semibold text-red-700 dark:text-red-300 mb-3">
-                ⚠️ Points d'attention ({summary.concerns.length})
+<Icon name="warning" className="mr-1.5" />Points d'attention ({summary.concerns.length})
               </h4>
               <ul className="space-y-2">
                 {summary.concerns.map((c, i) => (
                   <li key={i} className="text-sm text-gray-700 dark:text-gray-300 flex items-start gap-2">
-                    <span className="text-red-500 mt-0.5">!</span>
+                    <span className="text-red-500 mt-0.5"><Icon name="alert" /></span>
                     {c}
                   </li>
                 ))}
@@ -165,7 +166,7 @@ export default function AIInsights() {
 
           {blockages.blockages.length === 0 ? (
             <div className="card text-center py-12">
-              <div className="text-4xl mb-3">✅</div>
+              <Icon name="done" className="text-4xl mb-3 text-green-500" />
               <p className="text-gray-500 dark:text-gray-400">Aucun blocage détecté.</p>
             </div>
           ) : (
@@ -180,7 +181,7 @@ export default function AIInsights() {
                         b.severity === 'Élevée' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/50 dark:text-orange-300' :
                         'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/50 dark:text-yellow-300'
                       }`}>
-                        {b.severity === 'Critique' ? '🔴' : b.severity === 'Élevée' ? '🟠' : '🟡'} {b.severity}
+                        <Icon name="dot" className={`text-[0.6em] mr-1 ${b.severity === 'Critique' ? 'text-red-500' : b.severity === 'Élevée' ? 'text-orange-500' : 'text-yellow-500'}`} />{b.severity}
                       </span>
                     </div>
                     <h4 className="text-sm font-semibold text-gray-800 dark:text-gray-200">{b.task_description}</h4>
@@ -189,12 +190,12 @@ export default function AIInsights() {
                     </p>
                     {b.observations && (
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 italic">
-                        💬 {b.observations}
+<Icon name="comment" className="mr-1.5" />{b.observations}
                       </p>
                     )}
                     <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
                       <p className="text-xs text-blue-700 dark:text-blue-300">
-                        💡 Suggestion : {b.suggestion}
+<Icon name="lightbulb" className="mr-1.5" />Suggestion : {b.suggestion}
                       </p>
                     </div>
                   </div>
@@ -214,7 +215,7 @@ export default function AIInsights() {
 
           {prioritize.suggestions.length === 0 ? (
             <div className="card text-center py-12">
-              <div className="text-4xl mb-3">✨</div>
+              <Icon name="sparkles" className="text-4xl mb-3 text-primary-400" />
               <p className="text-gray-500 dark:text-gray-400">La priorisation actuelle est optimale.</p>
             </div>
           ) : (
@@ -245,7 +246,7 @@ export default function AIInsights() {
                       </div>
                       {s.suggested_priority !== s.current_priority && (
                         <>
-                          <span className="text-gray-400">→</span>
+                          <Icon name="arrow-right" className="text-gray-400 text-[0.8em]" />
                           <div className="flex items-center gap-1 text-xs">
                             <span className="text-gray-500">Suggérée :</span>
                             <span className={`font-medium ${
@@ -260,7 +261,7 @@ export default function AIInsights() {
                     </div>
                     {s.reason && (
                       <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
-                        📝 {s.reason}
+<Icon name="todo" className="mr-1.5" />{s.reason}
                       </p>
                     )}
                   </div>
@@ -291,7 +292,7 @@ export default function AIInsights() {
                   r.priority === 'Haute' ? 'text-red-500' :
                   r.priority === 'Moyenne' ? 'text-yellow-500' : 'text-green-500'
                 }`}>
-                  {r.priority === 'Haute' ? '🔴' : r.priority === 'Moyenne' ? '🟡' : '🟢'}
+                  <Icon name="dot" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">

@@ -5,6 +5,7 @@ import StatusBadge from '../components/statusbadge'
 import PriorityBadge from '../components/prioritybadge'
 import FilterBar from '../components/filterbar'
 import TaskCard from '../components/taskcard'
+import Icon from '../components/icon'
 import toast from 'react-hot-toast'
 
 const SORT_COLUMNS = [
@@ -101,13 +102,13 @@ export default function TaskList() {
             className="btn-secondary text-sm py-1.5"
             title={viewMode === 'table' ? 'Vue cartes' : 'Vue tableau'}
           >
-            {viewMode === 'table' ? '🃏 Cartes' : '📋 Tableau'}
+            <Icon name={viewMode === 'table' ? 'cards' : 'table'} className="mr-1.5" />{viewMode === 'table' ? 'Cartes' : 'Tableau'}
           </button>
-          <button onClick={exportData} className="btn-secondary text-sm py-1.5">
-            📥 Exporter
+          <button onClick={exportData} className="btn-secondary text-sm py-1.5 inline-flex items-center gap-1.5">
+            <Icon name="export" /> Exporter
           </button>
-          <button onClick={() => navigate('/tasks/new')} className="btn-primary text-sm py-1.5">
-            ➕ Nouvelle
+          <button onClick={() => navigate('/tasks/new')} className="btn-primary text-sm py-1.5 inline-flex items-center gap-1.5">
+            <Icon name="plus" /> Nouvelle
           </button>
         </div>
       </div>
@@ -119,17 +120,17 @@ export default function TaskList() {
       {loading ? (
         <div className="flex items-center justify-center py-16">
           <div className="text-center">
-            <div className="animate-spin text-4xl mb-4">⏳</div>
+            <Icon name="spinner" spin className="text-4xl mb-4 text-gray-400" />
             <p className="text-gray-500 dark:text-gray-400">Chargement...</p>
           </div>
         </div>
       ) : tasks.length === 0 ? (
         <div className="card text-center py-16">
-          <div className="text-5xl mb-4">📭</div>
+          <Icon name="empty" className="text-5xl mb-4 text-gray-300 dark:text-gray-600" />
           <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300">Aucune tâche trouvée</h3>
           <p className="text-gray-500 dark:text-gray-400 mt-1">Essayez de modifier les filtres ou créez une nouvelle tâche.</p>
-          <button onClick={() => navigate('/tasks/new')} className="btn-primary mt-4">
-            ➕ Créer une tâche
+          <button onClick={() => navigate('/tasks/new')} className="btn-primary mt-4 inline-flex items-center gap-2">
+            <Icon name="plus" /> Créer une tâche
           </button>
         </div>
       ) : viewMode === 'cards' ? (
@@ -161,7 +162,7 @@ export default function TaskList() {
                       <span className="text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
                         {col.label}
                         {sortBy === col.key && (
-                          <span className="ml-1">{sortOrder === 'asc' ? '↑' : '↓'}</span>
+                          <Icon name={sortOrder === 'asc' ? 'sort-up' : 'sort-down'} className="ml-1 text-[0.7em]" />
                         )}
                       </span>
                     </th>
@@ -231,14 +232,14 @@ export default function TaskList() {
                           className="p-1 text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
                           title="Modifier"
                         >
-                          ✏️
+                          <Icon name="edit" />
                         </button>
                         <button
                           onClick={() => handleDelete(task.id)}
                           className="p-1 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
                           title="Supprimer"
                         >
-                          🗑️
+                          <Icon name="delete" />
                         </button>
                       </div>
                     </td>
@@ -254,14 +255,14 @@ export default function TaskList() {
       {selected.size > 0 && (
         <div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-gray-800 dark:bg-gray-700 text-white rounded-xl shadow-lg px-4 py-3 flex items-center gap-3 z-20">
           <span className="text-sm">{selected.size} tâche(s) sélectionnée(s)</span>
-          <button className="px-3 py-1 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition-colors">
-            🗑️ Supprimer
+          <button className="px-3 py-1 bg-red-600 hover:bg-red-700 rounded-lg text-sm transition-colors inline-flex items-center gap-1.5">
+            <Icon name="delete" /> Supprimer
           </button>
           <button
             onClick={() => setSelected(new Set())}
-            className="px-3 py-1 bg-gray-600 hover:bg-gray-500 rounded-lg text-sm transition-colors"
+            className="px-3 py-1 bg-gray-600 hover:bg-gray-500 rounded-lg text-sm transition-colors inline-flex items-center gap-1.5"
           >
-            ✕ Annuler
+            <Icon name="close" /> Annuler
           </button>
         </div>
       )}

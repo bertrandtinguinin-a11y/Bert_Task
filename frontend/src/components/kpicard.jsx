@@ -1,3 +1,5 @@
+import Icon from './icon'
+
 export default function KpiCard({ title, value, icon, color = 'primary', subtitle, onClick }) {
   const colorClasses = {
     primary: 'border-l-4 border-primary-500 bg-primary-50/50 dark:bg-primary-900/10',
@@ -22,7 +24,7 @@ export default function KpiCard({ title, value, icon, color = 'primary', subtitl
           )}
         </div>
         {icon && (
-          <div className="text-3xl opacity-70">{icon}</div>
+          <div className="text-2xl opacity-60 text-gray-400 dark:text-gray-500"><Icon name={icon} /></div>
         )}
       </div>
     </div>

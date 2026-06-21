@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { fetchStatusDistribution, fetchPriorityDistribution, fetchThemeCompletion } from '../api/client'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import Icon from '../components/icon'
 import toast from 'react-hot-toast'
 
 const STATUS_COLORS = {
@@ -49,7 +50,7 @@ export default function Synthesis() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin text-4xl mb-4">⏳</div>
+          <Icon name="spinner" spin className="text-4xl mb-4 text-gray-400" />
           <p className="text-gray-500 dark:text-gray-400">Chargement des analyses...</p>
         </div>
       </div>
@@ -66,7 +67,7 @@ export default function Synthesis() {
       {/* Bar Chart - Status */}
       <div className="card">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-          📊 Répartition par Statut
+<Icon name="chart" className="mr-2 text-gray-400" />Répartition par Statut
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={statusData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
@@ -111,7 +112,7 @@ export default function Synthesis() {
       {/* Pie Chart - Priority */}
       <div className="card">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-          🎯 Répartition par Priorité
+<Icon name="target" className="mr-2 text-gray-400" />Répartition par Priorité
         </h3>
         <ResponsiveContainer width="100%" height={280}>
           <PieChart>
@@ -148,7 +149,7 @@ export default function Synthesis() {
       {/* Theme Completion Table */}
       <div className="card">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
-          📈 Taux de Complétion par Thème
+<Icon name="synthesis" className="mr-2 text-gray-400" />Taux de Complétion par Thème
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">

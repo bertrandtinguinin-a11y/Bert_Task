@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import StatusBadge from './statusbadge'
 import PriorityBadge from './prioritybadge'
+import Icon from './icon'
 
 export default function TaskCard({ task }) {
   const navigate = useNavigate()
@@ -37,25 +38,25 @@ export default function TaskCard({ task }) {
           <div className="flex flex-wrap items-center gap-2 mt-2">
             <StatusBadge status={task.status} />
             <PriorityBadge priority={task.priority} />
-            <span className="text-xs text-gray-500 dark:text-gray-400">👤 {task.responsible_person}</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400 inline-flex items-center gap-1"><Icon name="user" /> {task.responsible_person}</span>
           </div>
         </div>
         <div className="text-right flex-shrink-0">
           {startDate && (
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              🚀 {startDate}
+            <p className="text-xs text-gray-500 dark:text-gray-400 inline-flex items-center gap-1">
+              <Icon name="start" /> {startDate}
             </p>
           )}
           {dueDate && (
-            <p className={`text-xs font-medium ${isOverdue ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'}`}>
-              {isOverdue ? '⚠️ ' : '📅 '}{dueDate}
+            <p className={`text-xs font-medium inline-flex items-center gap-1 ${isOverdue ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'}`}>
+              <Icon name={isOverdue ? 'warning' : 'calendar'} /> {dueDate}
             </p>
           )}
         </div>
       </div>
       {task.observations && (
         <p className="mt-2 text-xs text-gray-500 dark:text-gray-400 line-clamp-2 italic">
-          💬 {task.observations}
+          <Icon name="comment" className="mr-1" /> {task.observations}
         </p>
       )}
     </div>

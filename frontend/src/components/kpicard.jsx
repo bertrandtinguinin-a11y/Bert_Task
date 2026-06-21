@@ -1,22 +1,23 @@
 import Icon from './icon'
 
 export default function KpiCard({ title, value, icon, color = 'primary', subtitle, onClick }) {
-  const colorClasses = {
-    primary: 'border-l-4 border-primary-500 bg-primary-50/50 dark:bg-primary-900/10',
-    green: 'border-l-4 border-green-500 bg-green-50/50 dark:bg-green-900/10',
-    blue: 'border-l-4 border-blue-500 bg-blue-50/50 dark:bg-blue-900/10',
-    yellow: 'border-l-4 border-yellow-500 bg-yellow-50/50 dark:bg-yellow-900/10',
-    red: 'border-l-4 border-red-500 bg-red-50/50 dark:bg-red-900/10',
-    orange: 'border-l-4 border-orange-500 bg-orange-50/50 dark:bg-orange-900/10',
+  // Pastille d'icône colorée (douce) — accent de couleur sans bordure
+  const iconClasses = {
+    primary: 'bg-primary-50 text-primary-600 dark:bg-primary-900/30 dark:text-primary-400',
+    green: 'bg-green-50 text-green-600 dark:bg-green-900/30 dark:text-green-400',
+    blue: 'bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
+    yellow: 'bg-yellow-50 text-yellow-600 dark:bg-yellow-900/30 dark:text-yellow-400',
+    red: 'bg-red-50 text-red-600 dark:bg-red-900/30 dark:text-red-400',
+    orange: 'bg-orange-50 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400',
   }
 
   return (
     <div
-      className={`card ${colorClasses[color] || colorClasses.primary} ${onClick ? 'cursor-pointer hover:shadow-md transition-shadow' : ''}`}
+      className={`bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow duration-200 ${onClick ? 'cursor-pointer' : ''}`}
       onClick={onClick}
     >
-      <div className="flex items-start justify-between">
-        <div>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
           <p className="text-sm font-medium text-gray-500 dark:text-gray-400">{title}</p>
           <p className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mt-1">{value}</p>
           {subtitle && (
@@ -24,7 +25,9 @@ export default function KpiCard({ title, value, icon, color = 'primary', subtitl
           )}
         </div>
         {icon && (
-          <div className="text-2xl opacity-60 text-gray-400 dark:text-gray-500"><Icon name={icon} /></div>
+          <div className={`flex items-center justify-center w-10 h-10 rounded-lg flex-shrink-0 ${iconClasses[color] || iconClasses.primary}`}>
+            <Icon name={icon} className="text-lg" />
+          </div>
         )}
       </div>
     </div>

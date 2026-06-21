@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { signInWithGoogle, signIn, signUp } from '../api/client'
+import Icon from '../components/icon'
 import toast from 'react-hot-toast'
 
 export default function Login() {
@@ -55,8 +56,8 @@ export default function Login() {
       <div className="w-full max-w-sm">
         {/* Logo & Title */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 text-white text-3xl shadow-lg mb-4">
-            📋
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-green-600 to-green-800 text-white text-2xl shadow-lg mb-4">
+            <Icon name="tasks" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">TaskMN</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Suivi de tâches — M&N Expertise</p>
@@ -120,7 +121,11 @@ export default function Login() {
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}
             >
-              {loading ? '⏳ Patientez...' : mode === 'register' ? '📝 Créer un compte' : '🔑 Se connecter'}
+              {loading
+                ? <><Icon name="spinner" spin className="mr-2" />Patientez...</>
+                : mode === 'register'
+                  ? <><Icon name="user-plus" className="mr-2" />Créer un compte</>
+                  : <><Icon name="login" className="mr-2" />Se connecter</>}
             </button>
           </form>
 

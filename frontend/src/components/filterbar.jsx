@@ -1,3 +1,5 @@
+import Icon from './icon'
+
 const STATUS_OPTIONS = ['', 'À faire', 'En cours', 'Réalisé', 'À traiter', 'À planifier', 'Bloqué']
 const PRIORITY_OPTIONS = ['', 'Haute', 'Moyenne', 'Basse']
 const THEME_OPTIONS = [
@@ -29,13 +31,16 @@ export default function FilterBar({ filters, onFilterChange, showSearch = true }
     <div className="space-y-3">
       <div className="flex flex-wrap items-center gap-2">
         {showSearch && (
-          <input
-            type="text"
-            placeholder="🔍 Rechercher..."
-            value={filters.search || ''}
-            onChange={e => handleChange('search', e.target.value)}
-            className="input-field max-w-xs text-sm"
-          />
+          <div className="relative max-w-xs w-full">
+            <Icon name="search" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none" />
+            <input
+              type="text"
+              placeholder="Rechercher..."
+              value={filters.search || ''}
+              onChange={e => handleChange('search', e.target.value)}
+              className="input-field text-sm pl-9 w-full"
+            />
+          </div>
         )}
         <select
           value={filters.status || ''}
@@ -68,19 +73,22 @@ export default function FilterBar({ filters, onFilterChange, showSearch = true }
           ))}
         </select>
         {hasFilters && (
-          <button onClick={clearFilters} className="btn-secondary text-sm py-1.5">
-            ✕ Effacer
+          <button onClick={clearFilters} className="btn-secondary text-sm py-1.5 inline-flex items-center gap-1.5">
+            <Icon name="close" /> Effacer
           </button>
         )}
       </div>
       {showSearch && (
-        <input
-          type="text"
-          placeholder="👤 Filtrer par responsable..."
-          value={filters.responsible || ''}
-          onChange={e => handleChange('responsible', e.target.value)}
-          className="input-field max-w-xs text-sm"
-        />
+        <div className="relative max-w-xs w-full">
+          <Icon name="user" className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none" />
+          <input
+            type="text"
+            placeholder="Filtrer par responsable..."
+            value={filters.responsible || ''}
+            onChange={e => handleChange('responsible', e.target.value)}
+            className="input-field text-sm pl-9 w-full"
+          />
+        </div>
       )}
     </div>
   )

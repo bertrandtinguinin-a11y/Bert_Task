@@ -2,13 +2,14 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { signOut } from '../api/client'
 import toast from 'react-hot-toast'
+import Icon from './icon'
 
 const NAV_ITEMS = [
-  { path: '/', label: 'Tableau de bord', icon: '📊' },
-  { path: '/tasks', label: 'Tâches', icon: '📋' },
-  { path: '/synthesis', label: 'Synthèse', icon: '📈' },
-  { path: '/ai', label: 'IA Insights', icon: '🤖' },
-  { path: '/settings', label: 'Paramètres', icon: '⚙️' },
+  { path: '/', label: 'Tableau de bord', icon: 'dashboard' },
+  { path: '/tasks', label: 'Tâches', icon: 'tasks' },
+  { path: '/synthesis', label: 'Synthèse', icon: 'synthesis' },
+  { path: '/ai', label: 'IA Insights', icon: 'ai' },
+  { path: '/settings', label: 'Paramètres', icon: 'settings' },
 ]
 
 export default function Layout({ children, darkMode, toggleDarkMode, user }) {
@@ -30,8 +31,8 @@ export default function Layout({ children, darkMode, toggleDarkMode, user }) {
   const AccountBox = () => (
     user ? (
       <div className="space-y-2">
-        <p className="text-xs text-gray-500 dark:text-gray-400 truncate" title={user.email}>
-          👤 {user.email}
+        <p className="text-xs text-gray-500 dark:text-gray-400 truncate flex items-center gap-1.5" title={user.email}>
+          <Icon name="user" /> {user.email}
         </p>
         <button onClick={handleLogout}
           className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20">
@@ -61,7 +62,7 @@ export default function Layout({ children, darkMode, toggleDarkMode, user }) {
             <span className="text-xs text-gray-400 dark:text-gray-500 hidden sm:inline">M&N Expertise</span>
           </div>
           <button onClick={toggleDarkMode} className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
-            {darkMode ? '☀️' : '🌙'}
+            <Icon name={darkMode ? 'sun' : 'moon'} />
           </button>
         </div>
       </header>
@@ -76,7 +77,7 @@ export default function Layout({ children, darkMode, toggleDarkMode, user }) {
                 <h1 className="text-xl font-bold text-green-700 dark:text-green-400">TaskMN</h1>
                 <p className="text-xs text-gray-500 dark:text-gray-400">M&N Expertise — Natitingou</p>
               </div>
-              <button onClick={() => setSidebarOpen(false)} className="p-1 text-gray-400 hover:text-gray-600">✕</button>
+              <button onClick={() => setSidebarOpen(false)} className="p-1 text-gray-400 hover:text-gray-600"><Icon name="close" /></button>
             </div>
             <nav className="space-y-1">
               {NAV_ITEMS.map(item => (
@@ -87,7 +88,7 @@ export default function Layout({ children, darkMode, toggleDarkMode, user }) {
                       : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                   }`}
                 >
-                  <span>{item.icon}</span>
+                  <Icon name={item.icon} className="w-5 text-center" fixedWidth />
                   <span>{item.label}</span>
                 </Link>
               ))}
@@ -115,15 +116,15 @@ export default function Layout({ children, darkMode, toggleDarkMode, user }) {
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
               >
-                <span>{item.icon}</span>
+                <Icon name={item.icon} className="w-5 text-center" fixedWidth />
                 <span>{item.label}</span>
               </Link>
             ))}
           </nav>
           <div className="px-4 py-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
             <AccountBox />
-            <button onClick={toggleDarkMode} className="p-1.5 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm" title={darkMode ? 'Mode clair' : 'Mode sombre'}>
-              {darkMode ? '☀️ Clair' : '🌙 Sombre'}
+            <button onClick={toggleDarkMode} className="inline-flex items-center gap-2 p-1.5 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm" title={darkMode ? 'Mode clair' : 'Mode sombre'}>
+              <Icon name={darkMode ? 'sun' : 'moon'} /> {darkMode ? 'Clair' : 'Sombre'}
             </button>
           </div>
         </div>

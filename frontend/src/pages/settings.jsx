@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { fetchTasks, fetchUsers, updateUserRole, deleteUser, supabase } from '../api/client'
 import { generatePerformanceSummary as aiSummary } from '../api/ai'
+import Icon from '../components/icon'
 import toast from 'react-hot-toast'
 
 export default function Settings() {
@@ -94,7 +95,7 @@ export default function Settings() {
 
       if (soon.length > 0) {
         const summary = aiSummary(data)
-        const rapport = `📋 RAPPORT TaskMN — Échéances proches (${soon.length} tâche(s))
+        const rapport = `RAPPORT TaskMN — Échéances proches (${soon.length} tâche(s))
 
 ${soon.map(t => `• ${t.task_description}
    Échéance: ${new Date(t.due_date).toLocaleDateString('fr-FR')} (J-${t.days_left})
@@ -102,7 +103,7 @@ ${soon.map(t => `• ${t.task_description}
    Statut: ${t.status} | Priorité: ${t.priority}`).join('\n\n')}
 
 ---
-📊 ${summary.summary_text}
+${summary.summary_text}
 — TaskMN, M&N Expertise`
 
         const subject = `TaskMN — ${soon.length} tâche(s) arrivent à échéance`
@@ -110,7 +111,7 @@ ${soon.map(t => `• ${t.task_description}
         window.location.href = mailto
         toast.success(`${soon.length} tâche(s) proche(s) — email préparé !`)
       } else {
-        toast.success('Aucune tâche à échéance dans les 3 prochains jours 👍')
+        toast.success('Aucune tâche à échéance dans les 3 prochains jours')
       }
     } catch (err) { console.error('Erreur check:', err) }
   }
@@ -118,15 +119,15 @@ ${soon.map(t => `• ${t.task_description}
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">⚙️ Paramètres</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 inline-flex items-center gap-2"><Icon name="settings" className="text-gray-400" />Paramètres</h1>
         <p className="text-sm text-gray-500 dark:text-gray-400">Gestion du compte et configuration</p>
       </div>
 
       {/* Mon compte */}
       <div className="card">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">👤 Mon compte</h3>
-          {!editMode && <button onClick={() => setEditMode(true)} className="btn-secondary text-sm py-1.5">✏️ Modifier</button>}
+          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 inline-flex items-center gap-2"><Icon name="user" className="text-gray-400" />Mon compte</h3>
+          {!editMode && <button onClick={() => setEditMode(true)} className="btn-secondary text-sm py-1.5 inline-flex items-center gap-1.5"><Icon name="edit" /> Modifier</button>}
         </div>
         {editMode ? (
           <div className="space-y-4">
@@ -138,30 +139,30 @@ ${soon.map(t => `• ${t.task_description}
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Adresse e-mail *</label>
               <input type="email" value={profile.email} onChange={e => setProfile({ ...profile, email: e.target.value })} className="input-field" placeholder="vous@exemple.com" />
             </div>
-            <button onClick={saveProfile} className="btn-primary py-2 px-4 text-sm">💾 Enregistrer</button>
+            <button onClick={saveProfile} className="btn-primary py-2 px-4 text-sm inline-flex items-center gap-1.5"><Icon name="save" /> Enregistrer</button>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
             <div><p className="text-gray-500 dark:text-gray-400">Nom</p><p className="font-medium text-gray-800 dark:text-gray-200">{profile.username}</p></div>
             <div><p className="text-gray-500 dark:text-gray-400">Email</p><p className="font-medium text-gray-800 dark:text-gray-200">{profile.email}</p></div>
-            <div><p className="text-gray-500 dark:text-gray-400">Statut</p><p className="font-medium text-green-600 dark:text-green-400">✅ Actif</p></div>
+            <div><p className="text-gray-500 dark:text-gray-400">Statut</p><p className="font-medium text-green-600 dark:text-green-400 inline-flex items-center gap-1.5"><Icon name="done" /> Actif</p></div>
           </div>
         )}
       </div>
 
       {/* Export */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">📊 Export des données</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 inline-flex items-center gap-2"><Icon name="chart" className="text-gray-400" />Export des données</h3>
         <div className="flex flex-wrap gap-3">
-          <button onClick={() => exportData('excel')} className="btn-primary text-sm py-2 px-4">📥 Exporter en Excel</button>
-          <button onClick={() => exportData('csv')} className="btn-secondary text-sm py-2 px-4">📄 Exporter en CSV</button>
+          <button onClick={() => exportData('excel')} className="btn-primary text-sm py-2 px-4 inline-flex items-center gap-1.5"><Icon name="export" /> Exporter en Excel</button>
+          <button onClick={() => exportData('csv')} className="btn-secondary text-sm py-2 px-4 inline-flex items-center gap-1.5"><Icon name="csv" /> Exporter en CSV</button>
         </div>
         {tasks.length > 0 && <p className="text-xs text-gray-500 mt-3">{tasks.length} tâche(s) exportable(s)</p>}
       </div>
 
       {/* Notifications email */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">🔔 Notifications par email</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 inline-flex items-center gap-2"><Icon name="bell" className="text-gray-400" />Notifications par email</h3>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
@@ -179,12 +180,12 @@ ${soon.map(t => `• ${t.task_description}
                 <input type="email" value={notifEmail} onChange={e => setNotifEmail(e.target.value)} className="input-field" placeholder="exemple@gmail.com" />
               </div>
               <div className="flex gap-3">
-                <button onClick={saveNotifSettings} className="btn-primary text-sm py-2 px-4">💾 Enregistrer</button>
-                <button onClick={checkDeadlines} className="btn-secondary text-sm py-2 px-4">🔍 Tester maintenant</button>
+                <button onClick={saveNotifSettings} className="btn-primary text-sm py-2 px-4 inline-flex items-center gap-1.5"><Icon name="save" /> Enregistrer</button>
+                <button onClick={checkDeadlines} className="btn-secondary text-sm py-2 px-4 inline-flex items-center gap-1.5"><Icon name="search" /> Tester maintenant</button>
               </div>
               {notifChecked && <p className="text-xs text-gray-500">Dernier check: {new Date(notifChecked.date).toLocaleString('fr-FR')} — {notifChecked.count} tâche(s)</p>}
               <div className="p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                <p className="text-xs text-blue-700 dark:text-blue-300">ℹ️ Le rapport IA inclut: intitulé, échéance, responsable, statut + résumé global. L'email s'ouvre dans votre client mail pré-rempli.</p>
+                <p className="text-xs text-blue-700 dark:text-blue-300"><Icon name="info" className="mr-1.5" />Le rapport IA inclut: intitulé, échéance, responsable, statut + résumé global. L'email s'ouvre dans votre client mail pré-rempli.</p>
               </div>
             </>
           )}
@@ -193,11 +194,11 @@ ${soon.map(t => `• ${t.task_description}
 
       {/* À propos */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">ℹ️ À propos</h3>
+        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 inline-flex items-center gap-2"><Icon name="info" className="text-gray-400" />À propos</h3>
         <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
           <p><strong>Application :</strong> TaskMN v2.0.0</p>
           <p><strong>Organisation :</strong> M&N Expertise — Natitingou, Bénin</p>
-          <p><strong>Stockage :</strong> Supabase PostgreSQL (cloud ☁️)</p>
+          <p className="inline-flex items-center gap-1.5"><strong>Stockage :</strong> Supabase PostgreSQL (cloud) <Icon name="cloud" className="text-gray-400" /></p>
           <p><strong>IA :</strong> Analyse NLP intégrée (JavaScript)</p>
           <p><strong>Export :</strong> Excel (.xls) + CSV</p>
           <p><strong>Notifications :</strong> Email J-2/J-3 avec rapport IA</p>
